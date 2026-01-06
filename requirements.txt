@@ -1,0 +1,18 @@
+# IronLog Runtime Dependencies
+# Install with: pip install -r requirements.txt
+
+# BeeWare / Toga - Cross-platform native UI
+toga>=0.4.0
+
+# Briefcase - Application packaging
+briefcase>=0.3.17
+
+# Standard library modules used (no install needed):
+# - sqlite3 (database)
+# - uuid (unique IDs)
+# - datetime (timestamps)
+# - json (export)
+# - csv (export)
+# - dataclasses (models)
+# - typing (type hints)
+# - pathlib (file paths)

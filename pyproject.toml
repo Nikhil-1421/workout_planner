@@ -1,0 +1,172 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ironlog"
+version = "1.0.0"
+description = "A sleek, dark-themed, minimalist workout tracker"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "IronLog Team", email = "team@ironlog.app"}
+]
+requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Mobile",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: iOS",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Health/Fitness",
+]
+dependencies = [
+    "toga>=0.4.0",
+    "briefcase>=0.3.17",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.1.0",
+    "mypy>=1.6.0",
+    "pre-commit>=3.5.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/ironlog/workout-tracker"
+Repository = "https://github.com/ironlog/workout-tracker"
+Documentation = "https://github.com/ironlog/workout-tracker#readme"
+
+[project.scripts]
+ironlog = "app.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+
+[tool.briefcase]
+project_name = "IronLog"
+bundle = "app.ironlog"
+version = "1.0.0"
+url = "https://ironlog.app"
+license = "MIT"
+author = "IronLog Team"
+author_email = "team@ironlog.app"
+
+[tool.briefcase.app.ironlog]
+formal_name = "IronLog"
+description = "Premium workout tracker"
+long_description = """IronLog is a sleek, dark-themed workout tracker that lets you
+create workout templates, log sets with ease, track your progress, and export your data.
+Built for lifters who value simplicity and speed."""
+icon = "app/resources/ironlog"
+sources = ["app"]
+requires = [
+    "toga>=0.4.0",
+]
+
+[tool.briefcase.app.ironlog.macOS]
+requires = [
+    "toga-cocoa>=0.4.0",
+]
+
+[tool.briefcase.app.ironlog.linux]
+requires = [
+    "toga-gtk>=0.4.0",
+]
+
+[tool.briefcase.app.ironlog.windows]
+requires = [
+    "toga-winforms>=0.4.0",
+]
+
+[tool.briefcase.app.ironlog.iOS]
+requires = [
+    "toga-iOS>=0.4.0",
+    "rubicon-objc>=0.4.0",
+]
+# Uncomment and configure for App Store submission:
+# bundle_identifier = "com.yourcompany.ironlog"
+# team_id = "YOUR_TEAM_ID"
+permission.camera = false
+permission.microphone = false
+permission.photo_library = false
+
+[tool.briefcase.app.ironlog.android]
+requires = [
+    "toga-android>=0.4.0",
+]
+
+# Development tools configuration
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "UP",     # pyupgrade
+    "ARG",    # flake8-unused-arguments
+    "SIM",    # flake8-simplify
+]
+ignore = [
+    "E501",   # line too long (handled by formatter)
+    "B008",   # do not perform function calls in argument defaults
+    "ARG001", # unused function argument
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+strict_optional = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+
+[tool.coverage.run]
+source = ["app"]
+branch = true
+omit = [
+    "app/ui/*",  # UI code is hard to test
+    "tests/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+]
